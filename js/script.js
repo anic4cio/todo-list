@@ -1,46 +1,47 @@
 class Todo {
 
     constructor() {
-        this.totalTasks = document.querySelectorAll('.task').length;
+        this.totalTasks = document.getElementsByClassName('task').length;
     }
 
     addTask(taskText) {
 
-        // clona template
+        // template clone
         let template = document.querySelector('.task').cloneNode(true);
-        // remove classe hide
+
+        // hide class remove
         template.classList.remove('hide');
-        // manipular texto
+        
+        // text manage
         let templateText = template.querySelector('.task-title');
         templateText.textContent = taskText;
+        let list = document.getElementById('tasks-container');
 
-        let list = document.querySelector('#tasks-container');
-
-        // inserir na lista
+        // task list insert
         list.appendChild(template);
 
-        // adiciona evento as tasks
+        // add tasks event
         this.addEvents();
 
-        // checa se tem task para adicionar a mensagem 'no tasks'
+        // check if does need to show 'no tasks' message
         this.checkTasks('add');
     }
     
     removeTask(task) {
         
-        // achar o elemento
+        // find the element
         let parentEl = task.parentElement;
         
-        // remover da lista
+        // remove from list
         parentEl.remove();
         
-        // checa se tem task para remover a mensagem 'no tasks'
+        // check if does need to remove 'no tasks' message
         this.checkTasks('remove');
     }
 
     completeTask(task) {
 
-        // adiciona classe done
+        // add done class
         task.classList.add('done');
     }
 
@@ -51,12 +52,12 @@ class Todo {
         let doneBtns = document.querySelectorAll('.fa-check');
         let doneBtn = doneBtns[doneBtns.length - 1];
 
-        // adicina evento de remover
+        // add remove event
         removeBtn.addEventListener('click', function() {
             todo.removeTask(this);
         });
 
-        // adicina evento de completar task
+        // add complete task event
         doneBtn.addEventListener('click', function() {
             todo.completeTask(this);
         });
@@ -64,16 +65,16 @@ class Todo {
 
     checkTasks(command) {
 
-        let msg = document.querySelector('#empty-tasks');
+        let msg = document.getElementById('empty-tasks');
 
-        // lógica de adicionar ou remover tasks
+        // add or remove tasks system logic
         if(command === 'add') {
             this.totalTasks += 1;
         } else if (command === 'remove') {
             this.totalTasks -= 1;
         }
 
-        // checa se tem mais de uma classe
+        // check if has two or more class
         if(this.totalTasks == 1) {
             msg.classList.remove('hide');
         } else {
@@ -86,18 +87,18 @@ class Todo {
 let todo = new Todo();
 
 // events
-let addBtn = document.querySelector('#add');
+let addBtn = document.getElementById('add');
 
 addBtn.addEventListener('click', function(e) {
 
     e.preventDefault();
 
-    let taskText = document.querySelector('#task');
+    let taskText = document.getElementById('task');
 
     if(taskText.value != '') {
         todo.addTask(taskText.value);
     }
 
-    //limpa campo de texto
+    // clean text box
     taskText.value = '';  
 }); 
