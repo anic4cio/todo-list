@@ -1,5 +1,4 @@
 class Todo {
-
     constructor() {
         this.totalTasks = document.getElementsByClassName('task').length;
     }
@@ -9,7 +8,7 @@ class Todo {
         // template clone
         let template = document.querySelector('.task').cloneNode(true);
 
-        // hide class remove
+        // remove 'hide class' to show template
         template.classList.remove('hide');
         
         // text manage
@@ -17,23 +16,23 @@ class Todo {
         templateText.textContent = taskText;
         let list = document.getElementById('tasks-container');
 
-        // task list insert
+        // insert template task in list
         list.appendChild(template);
 
         // add tasks event
         this.addEvents();
 
-        // check if does need to show 'no tasks' message
+        // hide or show 'no tasks' message
         this.checkTasks('add');
     }
     
     removeTask(task) {
         
         // find the element
-        let parentEl = task.parentElement;
+        let parentElement = task.parentElement;
         
-        // remove from list
-        parentEl.remove();
+        // remove from tasks list
+        parentElement.remove();
         
         // check if does need to remove 'no tasks' message
         this.checkTasks('remove');
@@ -47,18 +46,21 @@ class Todo {
 
     addEvents() {
 
-        let removeBtns = document.querySelectorAll('.fa-trash');
-        let removeBtn = removeBtns[removeBtns.length - 1];
-        let doneBtns = document.querySelectorAll('.fa-check');
-        let doneBtn = doneBtns[doneBtns.length - 1];
+        // show and hide trash buttons
+        let removeButtons = document.querySelectorAll('.fa-trash');
+        let removeButton = removeButtons[removeButtons.length - 1];
+
+        // handle check button color green
+        let doneButtons = document.querySelectorAll('.fa-check');
+        let doneButton = doneButtons[doneButtons.length - 1];
 
         // add remove event
-        removeBtn.addEventListener('click', function() {
+        removeButton.addEventListener('click', function() {
             todo.removeTask(this);
         });
 
         // add complete task event
-        doneBtn.addEventListener('click', function() {
+        doneButton.addEventListener('click', function() {
             todo.completeTask(this);
         });
     }
@@ -67,14 +69,14 @@ class Todo {
 
         let msg = document.getElementById('empty-tasks');
 
-        // add or remove tasks system logic
+        // add or remove tasks 
         if(command === 'add') {
             this.totalTasks += 1;
         } else if (command === 'remove') {
             this.totalTasks -= 1;
         }
 
-        // check if has two or more class
+        // check if has one or more classes to hide 'no tasks'
         if(this.totalTasks == 1) {
             msg.classList.remove('hide');
         } else {
@@ -87,14 +89,14 @@ class Todo {
 let todo = new Todo();
 
 // events
-let addBtn = document.getElementById('add');
+let addButton = document.getElementById('add');
 
-addBtn.addEventListener('click', function(e) {
+addButton.addEventListener('click', function(event) {
 
-    e.preventDefault();
+    // cancel submit event
+    event.preventDefault();
 
     let taskText = document.getElementById('task');
-
     if(taskText.value != '') {
         todo.addTask(taskText.value);
     }
